@@ -1,10 +1,20 @@
-<div>
+<div id="datos-usuario">
     <!-- Si estado === EstadoDelComponente.NORMAL  -->
     <div *ngIf="this.estado === EstadoComponenteUsuario.NORMAL">
-        <div><span>Nombre: </span>{{ this.datosDelUsuario!.nombre }}</div>
-        <div><span>Apellidos: </span>{{ this.datosDelUsuario!.apellidos }}</div>
-        <div><span>Edad: </span>{{ this.datosDelUsuario!.edad }}</div>
-        <div><span>Email: </span>{{ this.datosDelUsuario!.email }}</div>
+        <!-- if es compacto-->
+        <div *ngIf="this.modoCompacto; else extendido">
+            {{ this.datosDelUsuario!.nombre }}
+            {{ this.datosDelUsuario!.apellidos }}
+            <a href="mailto:{{ this.datosDelUsuario!.email }}" 
+            title="{{ this.datosDelUsuario!.email }}">CORREO</a>
+        </div>
+        <!--si no es compacto-->
+        <ng-template #extendido>
+            <div><span>Nombre: </span>{{ this.datosDelUsuario!.nombre }}</div>
+            <div><span>Apellidos: </span>{{ this.datosDelUsuario!.apellidos }}</div>
+            <div><span>Edad: </span>{{ this.datosDelUsuario!.edad }}</div>
+            <div><span>Email: </span>{{ this.datosDelUsuario!.email }}</div>
+        </ng-template>
         <!-- Con la ! le indico que el dato... aunque él no está seguro de si va a estar, YO SI ESTOY SEGURO, que conozco la lógica de mi programa-->
     </div>
 

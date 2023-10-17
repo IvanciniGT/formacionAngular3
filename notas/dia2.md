@@ -128,3 +128,4 @@ Cuando monto un componente:
 [Editar]                Guardar           | Cancelar
 
 Son acciones CONFIRMABLES
+<accion-confirmable>
