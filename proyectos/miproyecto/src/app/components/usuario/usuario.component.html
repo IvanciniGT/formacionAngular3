@@ -1,1 +1,17 @@
-<p>Usuario: {{ data }}</p>
+<div>
+    <!-- Si estado === EstadoDelComponente.NORMAL  -->
+    <div *ngIf="this.estado === EstadoComponenteUsuario.NORMAL">
+        <div><span>Nombre: </span>{{ this.datosDelUsuario!.nombre }}</div>
+        <div><span>Apellidos: </span>{{ this.datosDelUsuario!.apellidos }}</div>
+        <div><span>Edad: </span>{{ this.datosDelUsuario!.edad }}</div>
+        <div><span>Email: </span>{{ this.datosDelUsuario!.email }}</div>
+        <!-- Con la ! le indico que el dato... aunque él no está seguro de si va a estar, YO SI ESTOY SEGURO, que conozco la lógica de mi programa-->
+    </div>
+
+    <!-- Si estado === EstadoDelComponente.REALIZANDO_CARGA  -->
+    <div *ngIf="this.estado === EstadoComponenteUsuario.REALIZANDO_CARGA"> Cargando datos del usuario... </div>
+
+    <!-- Si estado === EstadoDelComponente.ERROR  -->
+    <div *ngIf="this.estado === EstadoComponenteUsuario.ERROR"> Error al cargar los datos del usuario. Contacte con el administrador! </div>
+
+</div>
