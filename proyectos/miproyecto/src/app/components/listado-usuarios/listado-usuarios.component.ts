@@ -19,7 +19,7 @@ export class ListadoUsuariosComponent implements OnInit {
 
   estado: EstadosComponenteListadoUsuarios = EstadosComponenteListadoUsuarios.INICIAL
 
-  EstadosComponenteListadoUsuarios = EstadosComponenteListadoUsuarios
+  Estado = EstadosComponenteListadoUsuarios
   usuarioConOperacionEnCurso?: number
   listadoDeUsuarios?: DatosDeUsuario[];
   usuariosAMostrar: DatosDeUsuario[] = [];
@@ -99,4 +99,13 @@ export class ListadoUsuariosComponent implements OnInit {
       this.usuariosAMostrar = this.listadoDeUsuarios!.filter(usuario => (usuario.nombre + " " + usuario.apellidos + " " + usuario.email).includes(texto))
   }
 
+  busquedaProgramada:any
+  programarBusqueda(texto: string){
+    if(this.busquedaProgramada)
+      clearTimeout(this.busquedaProgramada) // Anula la anterior si la hay
+    this.busquedaProgramada = setTimeout( ()=> {
+      this.busquedaProgramada = undefined
+      this.buscar(texto)
+    }, 200 )
+  }
 }

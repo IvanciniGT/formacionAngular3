@@ -1,1 +1,39 @@
-<p>listado-usuarios works!</p>
+<div class="listado-usuarios" *ngIf="estado !== Estado.REALIZANDO_CARGA &&
+                                     estado !== Estado.ERROR
+">
+
+    <!--Buscador-->
+    <div class="buscador" *ngIf="estado === Estado.NORMAL && buscador">
+        <input  type="text" 
+                placeholder="Buscar..." 
+                #inputBuscador
+                (keyup)="programarBusqueda(inputBuscador.value)"
+                (onchange)="programarBusqueda(inputBuscador.value)"
+        >
+    </div>
+    <!--Listado de los usuarios-->
+    <div class="usuarios">
+        <usuario 
+            *ngFor="let usuarioActual of usuariosAMostrar"
+            [data]="usuarioActual"
+            [borrable]="( usuariosBorrables && estado === Estado.NORMAL) ||
+                        ( estado === Estado.USUARIO_EN_BORRADO && usuarioConOperacionEnCurso === usuarioActual.id )"
+            [editable]="( usuariosEditables && estado === Estado.NORMAL) ||
+                        ( estado === Estado.USUARIO_EN_EDICION && usuarioConOperacionEnCurso === usuarioActual.id )"
+            (onBorradoSolicitado)="usuarioEnBorrado(usuarioActual.id)"
+            (onBorradoCancelado)="borradoCanceladoParaUsuario(usuarioActual.id)"
+            (onBorradoConfirmado)="borradoConfirmadoParaUsuario(usuarioActual.id)"
+            (onEditadoSolicitado)="usuarioEnEdicion(usuarioActual.id)"
+            (onEditadoCancelado)="edicionCanceladaParaUsuario(usuarioActual.id)"
+            (onEditadoConfirmado)="edicionConfirmadaParaUsuario(usuarioActual.id)"
+        ></usuario>
+    </div>
+</div>
+
+<div class="listado-usuarios-error" *ngIf="estado === Estado.ERROR">
+    <h2>Ha ocurrido un error</h2>
+</div>
+
+<div class="listado-usuarios-en-carga" *ngIf="estado === Estado.REALIZANDO_CARGA">
+    <h2>Cargando...</h2>
+</div>
