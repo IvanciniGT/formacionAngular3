@@ -51,4 +51,36 @@ El buscador debe mostrarse solo cuando el listado esté en estado NORMAL
 
 Dentro del componente:
 - Listado de Todos los usuarios que me haya devuelto el servicio
-- Listado de los usuarios que mostramos en pantalla en un momento dado... Éste ¡se genera mediante un filtrado del anterior.
+- Listado de los usuarios que mostramos en pantalla en un momento dado... Éste se genera mediante un filtrado del anterior.
+
+
+---
+
+En la realidad
+
+
+```mermaid
+stateDiagram-v2
+    INICIAL --> REALIZANDO_CARGA: cuando se crea un listado
+    REALIZANDO_CARGA --> ERROR: Si hay un problema en la carga
+    REALIZANDO_CARGA--> NORMAL: Cuando recibo los datos del servicio
+    NORMAL --> USUARIO_EN_EDICION: Cuando en usuario se pulse en editar
+    NORMAL --> USUARIO_EN_BORRADO: Cuando en usuario se pulse en borrar
+    USUARIO_EN_EDICION --> NORMAL: Cuando se pulse en cancelar
+    USUARIO_EN_EDICION --> ACTUALIZANDO_USUARIO_EN_BACKEND: Cuando se pulse en guardar
+    ACTUALIZANDO_USUARIO_EN_BACKEND --> ERROR_EN_ACTUALIZACION_DE_DATOS: Si hay un problema en la actualización
+    ERROR_EN_ACTUALIZACION_DE_DATOS --> ACTUALIZANDO_USUARIO_EN_BACKEND: Quizás monte un temporizador que reintente la operación en 2 segundos... 3 veces
+    ACTUALIZANDO_USUARIO_EN_BACKEND --> NORMAL: Si cancelan
+    ACTUALIZANDO_USUARIO_EN_BACKEND --> NORMAL: Si va bien
+    ACTUALIZANDO_USUARIO_EN_BACKEND --> USUARIO_EN_EDICION
+    USUARIO_EN_BORRADO --> NORMAL: Cuando se pulse en cancelar
+    USUARIO_EN_BORRADO --> BORRANDO_USUARIO_EN_BACKEND: Cuando se pulse en guardar
+    BORRANDO_USUARIO_EN_BACKEND --> ERROR_EN_BORRADO_DE_DATOS: Si hay un problema en la actualización
+    ERROR_EN_BORRADO_DE_DATOS --> BORRANDO_USUARIO_EN_BACKEND: Quizás monte un temporizador que reintente la operación en 2 segundos... 3 veces
+    BORRANDO_USUARIO_EN_BACKEND --> NORMAL: Si cancelan
+    BORRANDO_USUARIO_EN_BACKEND --> NORMAL: Si va bien
+
+```
+
+ERROR_EN_ACTUALIZACION_DE_DATOS:
+    No hemos podido comunicar con el backend... vamos intentarlo de nuevo en 5seg [CANCELAR] [Volver al formulario]
