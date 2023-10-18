@@ -1,5 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
+
+
+enum ESTADOS_DE_LA_ACCION_CONFIRMABLE{
+  PENDIENTE_SOLICITAR_LA_ACCION,
+  ACCION_SOLICITADA,
+  PENDIENTE_CONFIRMAR_CANCELACION
+}
+
 @Component({
   selector: 'accion-confirmable',
   templateUrl: './accion-confirmable.component.html',
@@ -10,9 +18,15 @@ export class AccionConfirmableComponent {
   @Input()
   caption!:String
   @Input()
-  captionConfirmar:String = "Aceptar"
+  confirmationCaption:String = "Aceptar"
   @Input()
-  captionCancelar:String = "Cancelar"
+  cancellationCaption:String = "Cancelar"
+  @Input()
+  confirmCancellationCaption:String = "Aceptar"
+  @Input()
+  cancelCancellationCaption:String = "Cancelar"
+  @Input()
+  confirmationMessage?:String
   @Input()
   activateConfirmationButton = true
   @Input()
@@ -28,22 +42,29 @@ export class AccionConfirmableComponent {
   @Output()
   onAccionCancelada = new EventEmitter<void>()
 
-  confirmandoLaSolicitud:Boolean
+  estado = ESTADOS_DE_LA_ACCION_CONFIRMABLE.PENDIENTE_SOLICITAR_LA_ACCION
+  ESTADOS_DE_LA_ACCION_CONFIRMABLE = ESTADOS_DE_LA_ACCION_CONFIRMABLE
   
   constructor() { 
-    this.confirmandoLaSolicitud = false
   }
+
   accionSolicitada() {
-    this.confirmandoLaSolicitud = true;
+    this.estado = ESTADOS_DE_LA_ACCION_CONFIRMABLE.ACCION_SOLICITADA
     this.onAccionSolicitada.emit()
   }
   accionConfirmada() {
-    this.confirmandoLaSolicitud = false;
+    this.estado = ESTADOS_DE_LA_ACCION_CONFIRMABLE.PENDIENTE_SOLICITAR_LA_ACCION
     this.onAccionConfirmada.emit()
   }
   accionCancelada() {
-    this.confirmandoLaSolicitud = false;
+    this.estado = ESTADOS_DE_LA_ACCION_CONFIRMABLE.PENDIENTE_SOLICITAR_LA_ACCION
     this.onAccionCancelada.emit()
+  }
+  solicitadaCancelacion() {
+    this.estado = ESTADOS_DE_LA_ACCION_CONFIRMABLE.PENDIENTE_CONFIRMAR_CANCELACION
+  }
+  canceladaLaCancelacion() {
+    this.estado = ESTADOS_DE_LA_ACCION_CONFIRMABLE.ACCION_SOLICITADA
   }
 
 }

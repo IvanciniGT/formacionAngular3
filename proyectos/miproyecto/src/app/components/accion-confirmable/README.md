@@ -19,6 +19,18 @@
 | onAccionConfirmada | Cuando se apreta en el botón con texto: `captionConfirmar` |
 | onAccionCancelada | Cuando se apreta en el botón con texto: `captionCancelar` |
 
+## Estados
+
+```mermaid
+stateDiagram-v2
+    PENDIENTE_SOLICITAR_LA_ACCION --> ACCION_SOLICITADA : click en el botón de acción
+    ACCION_SOLICITADA --> PENDIENTE_SOLICITAR_LA_ACCION : click en el botón de confirmar
+    ACCION_SOLICITADA --> PENDIENTE_SOLICITAR_LA_ACCION : click en el botón de cancelar(siempre que la cancelación no requiera de confirmación)
+    ACCION_SOLICITADA --> PENDIENTE_CONFIRMAR_CANCELACION : click en el botón de cancelar(cuando la cancelación requiere de confirmación)
+    PENDIENTE_CONFIRMAR_CANCELACION --> PENDIENTE_SOLICITAR_LA_ACCION: click confirmar el cancelar
+    PENDIENTE_CONFIRMAR_CANCELACION --> ACCION_SOLICITADA: click en cancelar el cancelar
+    
+```
 
 ## Uso
 
@@ -42,3 +54,7 @@
                                         Y si he tocado algo?... el botón de Guardar debe estar Activo
                                                                 el botón de cancelar debe estar activo... y si le doy: Otra confirmación!
                                                                 Es decir... en este caso el botón cancelar es OTRA acción confirmable
+
+        [Editar] * click   -->       [ Guardar ]  [ Cancelar ] * click      ->        [Confirmar cancelación]  [Cancelar cancelación]
+         ^ desaparece al                ^ desaparece al 
+         hacer click en editar          hacer click en cancelar

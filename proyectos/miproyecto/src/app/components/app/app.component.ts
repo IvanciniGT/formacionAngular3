@@ -13,6 +13,6 @@ export class AppComponent {
                         // que se calcula en base al primer dato que guardo
 
   log(mensaje:String){
-    alert(mensaje)
+    //alert(mensaje)
   }
 }

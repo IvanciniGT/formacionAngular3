@@ -1,9 +1,17 @@
 <div class="accion-confirmable">
 
-    <button *ngIf="!confirmandoLaSolicitud" (click)="accionSolicitada()">{{ caption }}</button>
-    <button *ngIf=" confirmandoLaSolicitud" (click)="accionConfirmada()" [disabled]="!activateConfirmationButton">{{ captionConfirmar }}</button>
-    <button *ngIf=" confirmandoLaSolicitud" (click)="accionCancelada() ">{{ captionCancelar }}</button>
-
+    <button *ngIf="estado === ESTADOS_DE_LA_ACCION_CONFIRMABLE.PENDIENTE_SOLICITAR_LA_ACCION" (click)="accionSolicitada()">{{ caption }}</button>
+    <span *ngIf="estado === ESTADOS_DE_LA_ACCION_CONFIRMABLE.PENDIENTE_CONFIRMAR_CANCELACION && confirmationMessage">{{confirmationMessage!}}</span>
+    <button *ngIf="estado === ESTADOS_DE_LA_ACCION_CONFIRMABLE.ACCION_SOLICITADA" (click)="accionConfirmada()" [disabled]="!activateConfirmationButton">{{ confirmationCaption }}</button>
+    <button *ngIf="estado === ESTADOS_DE_LA_ACCION_CONFIRMABLE.ACCION_SOLICITADA && !confirmableCancelationButton" (click)="accionCancelada() ">{{ cancellationCaption }}</button>
+    <accion-confirmable  *ngIf="estado !== ESTADOS_DE_LA_ACCION_CONFIRMABLE.PENDIENTE_SOLICITAR_LA_ACCION && confirmableCancelationButton"
+        [caption]="cancellationCaption"
+        [confirmationCaption]="confirmCancellationCaption"
+        [cancellationCaption]="cancelCancellationCaption"
+        (onAccionSolicitada)="solicitadaCancelacion()"
+        (onAccionConfirmada)="accionCancelada()"
+        (onAccionCancelada)="canceladaLaCancelacion()"
+    ></accion-confirmable>
 </div>
 
 <!--

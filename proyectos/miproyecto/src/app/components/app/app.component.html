@@ -2,9 +2,12 @@
     <h1>Mi super app</h1>
     <accion-confirmable
         caption="Editar"
-        captionConfirmar="Guardar"
-        captionCancelar="Cancelar"
-        [activateConfirmationButton]="false"
+        confirmationCaption="Guardar"
+        cancellationCaption="Cancelar"
+        confirmCancellationCaption="Si, cancelar"
+        cancelCancellationCaption="No, lo he pensado mejor"
+        confirmationMessage="Perderás los datos no guardados. Estás seguro?"
+        [activateConfirmationButton]="true"
         [confirmableCancelationButton]="true"
         (onAccionSolicitada)="log('Solitada edición')"
         (onAccionConfirmada)="log('Confirmada edición')"
