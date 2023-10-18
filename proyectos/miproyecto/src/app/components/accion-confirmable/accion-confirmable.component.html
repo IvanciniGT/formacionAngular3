@@ -1,0 +1,15 @@
+<div class="accion-confirmable">
+
+    <button *ngIf="!confirmandoLaSolicitud" (click)="accionSolicitada()">{{ caption }}</button>
+    <button *ngIf=" confirmandoLaSolicitud" (click)="accionConfirmada()" [disabled]="!activateConfirmationButton">{{ captionConfirmar }}</button>
+    <button *ngIf=" confirmandoLaSolicitud" (click)="accionCancelada() ">{{ captionCancelar }}</button>
+
+</div>
+
+<!--
+    <button *ngIf="!confirmandoLaSolicitud; else confirmando" (click)="accionSolicitada()">{{ caption }}</button>
+    <ng-template #confirmando>
+        <button (click)="accionConfirmada()">{{ captionConfirmar }}</button>
+        <button (click)="accionCancelada() ">{{ captionCancelar }}</button>
+    </ng-template>
+-->

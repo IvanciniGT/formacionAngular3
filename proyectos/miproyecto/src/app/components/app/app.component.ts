@@ -11,4 +11,8 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'miproyecto'; // Inferencia de tipos: La variable tiene un tipo... 
                         // que se calcula en base al primer dato que guardo
+
+  log(mensaje:String){
+    alert(mensaje)
+  }
 }

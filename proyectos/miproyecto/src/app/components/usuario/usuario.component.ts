@@ -36,12 +36,14 @@ export class UsuarioComponent implements OnInit{
     if( typeof this.data === 'number'){     // me han pasado el id
       this.estado = EstadoComponenteUsuario.REALIZANDO_CARGA
       setTimeout( () => // Esto luego fuera.. solo por trampear
+        // Esta petición es asíncrona
         this.servicioDeUsuarios.getDatosDeUsuario(this.data as number).subscribe(
           {
             next:  (datosDeUsuario:DatosDeUsuario) => {
               this.datosDelUsuario = datosDeUsuario
               this.estado = EstadoComponenteUsuario.NORMAL
             }, // funcion que reciba los datosDeUsuario y que devuelva NADA
+               // Esta función se ejecuta diferida en el tiempo... cuando el servicio de usuarios me devuelva los datos
             error: (error:any) =>{
               this.estado = EstadoComponenteUsuario.ERROR
               console.error("Error al recuperar los datos del usuario", this.data, error)

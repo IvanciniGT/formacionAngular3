@@ -5,12 +5,14 @@ import { AppComponent } from './components/app/app.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { UsuarioServiceFake } from './service/impl/usuario.service.fake';
 import { UsuariosService } from './service/usuario.service';
+import { AccionConfirmableComponent } from './components/accion-confirmable/accion-confirmable.component';
 
 // LENGUAJE DECLARATIVO
 @NgModule({
   declarations: [ // Componentes web
     AppComponent, 
-    UsuarioComponent
+    UsuarioComponent, 
+    AccionConfirmableComponent
   ],
   imports: [      // Necesitará de algunos paquetes adicionales para funcionar... algunos de angular... otros no...... que angular tendrá que arrancar
     BrowserModule

@@ -1,5 +1,16 @@
 <div>
     <h1>Mi super app</h1>
+    <accion-confirmable
+        caption="Editar"
+        captionConfirmar="Guardar"
+        captionCancelar="Cancelar"
+        [activateConfirmationButton]="false"
+        [confirmableCancelationButton]="true"
+        (onAccionSolicitada)="log('Solitada edición')"
+        (onAccionConfirmada)="log('Confirmada edición')"
+        (onAccionCancelada)="log('Cancelada edición')"
+    ></accion-confirmable>
+
     <usuario [data]="5-3*14"></usuario>
     <usuario [data]="2" [modoCompacto]="true"></usuario>
     <!-- Esta linea de arriba, hará que Angular cree una instancia nueva de un UsuarioComponent-->
