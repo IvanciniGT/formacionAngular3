@@ -1,20 +1,60 @@
 <div id="datos-usuario">
+
+    <!--BOTONERA-->
+    <div class="botones">
+        <accion-confirmable
+            *ngIf="(estado === EstadoComponenteUsuario.NORMAL && editable) || estado === EstadoComponenteUsuario.EN_EDICION"
+            caption="Editar"
+            confirmationCaption="Guardar"
+            cancellationCaption="Cancelar"
+            confirmCancellationCaption="Si, cancelar"
+            cancelCancellationCaption="No, lo he pensado mejor"
+            confirmationMessage="Perderás los datos no guardados. Estás seguro?"
+            [activateConfirmationButton]="true"
+            [confirmableCancelationButton]="true"
+            (onAccionSolicitada)="edicionIniciada()"
+            (onAccionConfirmada)="edicionConfirmada()"
+            (onAccionCancelada)="edicionCancelada()"
+        ></accion-confirmable>
+        <accion-confirmable
+            *ngIf="(estado === EstadoComponenteUsuario.NORMAL && borrable) || 
+                    estado === EstadoComponenteUsuario.EN_BORRADO"
+            caption="Borrar"
+            confirmationCaption="Confirmar"
+            cancellationCaption="Cancelar"
+            (onAccionSolicitada)="borradoIniciado()"
+            (onAccionConfirmada)="borradoConfirmado()"
+            (onAccionCancelada)="borradoCancelado()"
+        ></accion-confirmable>
+    </div>
+
     <!-- Si estado === EstadoDelComponente.NORMAL  -->
-    <div *ngIf="this.estado === EstadoComponenteUsuario.NORMAL">
-        <!-- if es compacto-->
-        <div *ngIf="this.modoCompacto; else extendido">
-            {{ this.datosDelUsuario!.nombre }}
-            {{ this.datosDelUsuario!.apellidos }}
-            <a href="mailto:{{ this.datosDelUsuario!.email }}" 
-            title="{{ this.datosDelUsuario!.email }}">CORREO</a>
-        </div>
-        <!--si no es compacto-->
-        <ng-template #extendido>
-            <div><span>Nombre: </span>{{ this.datosDelUsuario!.nombre }}</div>
-            <div><span>Apellidos: </span>{{ this.datosDelUsuario!.apellidos }}</div>
-            <div><span>Edad: </span>{{ this.datosDelUsuario!.edad }}</div>
-            <div><span>Email: </span>{{ this.datosDelUsuario!.email }}</div>
-        </ng-template>
+    <div *ngIf="this.estado !== EstadoComponenteUsuario.ERROR &&
+                this.estado !== EstadoComponenteUsuario.REALIZANDO_CARGA">
+        <!-- Si no estoy en estado EN_EDICION-->
+                    <!-- if es compacto-->
+                    <div *ngIf="this.modoCompacto; else extendido">
+                        {{ this.datosDelUsuario!.nombre }}
+                        {{ this.datosDelUsuario!.apellidos }}
+                        <a href="mailto:{{ this.datosDelUsuario!.email }}" 
+                        title="{{ this.datosDelUsuario!.email }}">CORREO</a>
+                    </div>
+                    <!--si no es compacto-->
+                    <ng-template #extendido>
+                        <div><span>Nombre: </span>{{ this.datosDelUsuario!.nombre }}</div>
+                        <div><span>Apellidos: </span>{{ this.datosDelUsuario!.apellidos }}</div>
+                        <div><span>Edad: </span>{{ this.datosDelUsuario!.edad }}</div>
+                        <div><span>Email: </span>{{ this.datosDelUsuario!.email }}</div>
+                    </ng-template>
+        <!-- Si estoy en estado EN_EDICION-->
+                    <!--Formulario-->
+                    <!-- Por qué querría yo crear otro componente formulario?? 
+                        - Para reutilizarlo *** Para en el futuro reaprovecharlo al crear NUEVOS USUARIOS
+                        - Para que este fichero no quedara tan pesado ** Importante
+                    
+                        TODO: Lo haremos  !
+
+                    -->
         <!-- Con la ! le indico que el dato... aunque él no está seguro de si va a estar, YO SI ESTOY SEGURO, que conozco la lógica de mi programa-->
     </div>
 

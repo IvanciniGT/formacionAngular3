@@ -14,8 +14,13 @@
         (onAccionCancelada)="log('Cancelada edición')"
     ></accion-confirmable>
 
-    <usuario [data]="5-3*14"></usuario>
-    <usuario [data]="2" [modoCompacto]="true"></usuario>
+    <usuario [data]="5-3*14"
+        [borrable]="true"
+        [editable]="true"
+    ></usuario>
+    <usuario [data]="2" [modoCompacto]="true"
+        [borrable]="true"
+    ></usuario>
     <!-- Esta linea de arriba, hará que Angular cree una instancia nueva de un UsuarioComponent-->
     <!-- Los corchetes indican que lo que hay dentro de las comillas debe procesarse como código TS-->
 </div>

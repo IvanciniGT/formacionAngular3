@@ -76,7 +76,7 @@ export class UsuarioComponent implements OnInit{
   }
   datosCargados(datos: DatosDeUsuario){
     this.datosDelUsuario = datos
-    this.estado === EstadoComponenteUsuario.NORMAL
+    this.estado = EstadoComponenteUsuario.NORMAL
     this.onCargado.emit(this.datosDelUsuario.id)
   }
   errorEnCargaDeDatos(error:any){
