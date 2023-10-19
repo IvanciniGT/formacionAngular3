@@ -9,13 +9,14 @@ import { AccionConfirmableComponent } from './components/accion-confirmable/acci
 import { ListadoUsuariosComponent } from './components/listado-usuarios/listado-usuarios.component';
 import { EjemploFormularioComponent } from './components/ejemplo-formulario/ejemplo-formulario.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormularioUsuarioComponent } from './components/formulario-usuario/formulario-usuario.component';
 
 // LENGUAJE DECLARATIVO
 @NgModule({
   declarations: [ // Componentes web
     AppComponent, 
     UsuarioComponent, 
-    AccionConfirmableComponent, ListadoUsuariosComponent, EjemploFormularioComponent
+    AccionConfirmableComponent, ListadoUsuariosComponent, EjemploFormularioComponent, FormularioUsuarioComponent
   ],
   imports: [      // Necesitará de algunos paquetes adicionales para funcionar... algunos de angular... otros no...... que angular tendrá que arrancar
     BrowserModule,
