@@ -21,6 +21,13 @@ export class EjemploFormularioComponent implements OnInit{
       apellidos: [ null,[ Validators.required, Validators.maxLength(50), Validators.pattern("^((( ?[a-z]{0,3} )*[A-ZÁÉÍÓÚ][a-záéíóúñç]{0,20})+)$")]],
       edad: [null, [ Validators.required, Validators.min(18), Validators.max(120) ]],
       email: [null, [ Validators.email ]],
+      conduce: [null, [ Validators.required ]],
+      vehiculo: [null],
+      genero: ["ns/nc", [ Validators.required ]],
+      via: [null, [ Validators.required , Validators.maxLength(100)]],
+      numero: [null, [ Validators.required , Validators.maxLength(100)]],
+      poblacion: [null, [ Validators.required , Validators.maxLength(50)]],
+      cp: [null, [ Validators.required ,Validators.pattern("^[0-9]{4,5}$")]]
     }) // Inicializar el formulario
 
     // Las validaciones que hemos puesto arriba, son validaciones que se aplican campo a campo... de forma independiente
@@ -47,9 +54,9 @@ Nombre:   Ivan  |   Federico333x   | ivan | María de los Ángeles | Maria de l
 Apellidos:
 Edad:
 Email:
-Conduce:
-Tiene vehículo propio:
-Genero:
+Conduce:    radio: No Coche moto
+Tiene vehículo propio:  check
+Genero: lista
 DireccionES:
   Via:
   Número:
@@ -87,10 +94,21 @@ Cuál?
                    Extraer datos de un back  Exponer un servicio mediante un determinado protocolo
                         v                     v
    Componente WEB -> Servicio en Front -> Controlador en Back REST -> Servicio Back -> Repositorio -> BBDD
-   Formulario                                                         ^                               **** (PL/SQL)
+                                                            ^                               **** (PL/SQL)
    ^                                                                                                  ^ QUERY    
    Capturar datos                                                    lógica de negocio
                                                                             Al dar de alta un usuario en mi sistema: Mandar un email
+
+  MODELOS:
+    Formulario -> TIPO DE DATOS PROPIO
+                                    DTO
+                                -> TIPO DE DATOS DEL API REST
+                                                            DTO
+                                                        -> Servicio BACKEND
+                                                                      -> Repositorio
+                                                                         ENTIDAD
+
+
 
    lógica de representación
 

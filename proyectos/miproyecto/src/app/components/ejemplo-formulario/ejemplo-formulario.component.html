@@ -79,6 +79,92 @@
                 La edad debe ser menor de 120 años
             </div>
         </div>
+        <!--conduce: Radio button-->
+        <div class="campo">
+            <label 
+                [ngClass]="[
+                    !formulario.get('conduce')?.dirty ? 'sin-tocar' : 
+                    formulario.get('conduce')?.valid ? 'valido' : 'error'
+                ]"
+                for="conduce">¿Conduce?:</label>
+            <input type="radio" formControlName="conduce" value="si">No
+            <input type="radio" formControlName="conduce" value="coche">Coche
+            <input type="radio" formControlName="conduce" value="moto">Moto
+
+            <div class="mensaje-error" 
+            *ngIf="formulario.get('conduce')?.errors?.['required'] && formulario.get('conduce')?.touched">
+                Debe indicar qué conduce!
+            </div>
+        </div>
+
+        <!-- vehiculo / checkbox -->
+        <div class="campo">
+            <label for="vehiculo">Tiene vehículo propio:</label>
+            <input type="checkbox" formControlName="vehiculo" value="coche">Si
+        </div>
+        <!-- genero select-->
+        <div class="campo">
+            <label for="genero">Género:</label>
+            <select formControlName="genero">
+                <option value="ns/nc">Que te importa</option>
+                <option value="hombre">Hombre</option>
+                <option value="mujer">Mujer</option>
+                <option value="no-binario">No binario</option>
+                <option value="otro">Otro</option>
+            </select>
+        </div>
+        
+
+        <!--direccion---->
+        <div class="fila-campos">
+            <label for="direccion">Via:</label>
+            <input type="text" formControlName="via">
+            <label for="numero">Número:</label>
+            <input type="text" formControlName="numero">
+            <label for="poblacion">Población:</label>
+            <input type="text" formControlName="poblacion">
+            <label for="cp">CP:</label>
+            <input type="text" formControlName="cp">
+
+            <div class="mensaje-error" 
+            *ngIf="formulario.get('via')?.errors?.['required'] && formulario.get('via')?.touched">
+                La via es obligatoria
+            </div>
+            <div class="mensaje-error" 
+            *ngIf="formulario.get('via')?.errors?.['maxlength'] && formulario.get('via')?.touched">
+                No debe poner más de 100 caracteres en la via
+            </div>
+
+
+            <div class="mensaje-error" 
+            *ngIf="formulario.get('numero')?.errors?.['required'] && formulario.get('numero')?.touched">
+                El número es obligatorio
+            </div>
+            <div class="mensaje-error" 
+            *ngIf="formulario.get('numero')?.errors?.['maxlength'] && formulario.get('numero')?.touched">
+                No debe poner más de 10 caracteres en el número
+            </div>
+
+
+            <div class="mensaje-error" 
+            *ngIf="formulario.get('poblacion')?.errors?.['required'] && formulario.get('poblacion')?.touched">
+                La poblacion es obligatoria
+            </div>
+            <div class="mensaje-error" 
+            *ngIf="formulario.get('poblacion')?.errors?.['maxlength'] && formulario.get('poblacion')?.touched">
+                No debe poner más de 50 caracteres en la poblacion
+            </div>
+
+
+            <div class="mensaje-error" 
+            *ngIf="formulario.get('cp')?.errors?.['required'] && formulario.get('cp')?.touched">
+                El cp es obligatorio
+            </div>
+            <div class="mensaje-error" 
+            *ngIf="formulario.get('cp')?.errors?.['pattern'] && formulario.get('cp')?.touched">
+                CP NO VALIDO !!!!
+            </div>
+        </div>
 
         <div class="botones">
             <button type="submit"
