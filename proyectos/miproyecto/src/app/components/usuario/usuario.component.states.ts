@@ -4,5 +4,7 @@ export enum EstadoComponenteUsuario {
     REALIZANDO_CARGA,
     ERROR,
     EN_EDICION,
+    EDICION_VALIDA,
+    EDICION_INVALIDA,
     EN_BORRADO,
 }

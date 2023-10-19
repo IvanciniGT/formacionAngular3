@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EstadosComponenteFormularioUsuario } from './formulario-usuario.component.states';
 import { DatosDeUsuario } from 'src/app/models/usuario.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './formulario-usuario.component.html',
   styleUrls: ['./formulario-usuario.component.css']
 })
-export class FormularioUsuarioComponent {
+export class FormularioUsuarioComponent implements OnInit{
 
   @Input()
   data?:DatosDeUsuario;
@@ -20,9 +20,11 @@ export class FormularioUsuarioComponent {
   Estados = EstadosComponenteFormularioUsuario
   estado = EstadosComponenteFormularioUsuario.SIN_TOCAR
 
-  formulario: FormGroup
+  formulario?: FormGroup
 
   constructor(private formBuilder: FormBuilder) { 
+  }
+  ngOnInit(): void {
     this.formulario = this.formBuilder.group({
       nombre: [this.data?.nombre, [Validators.required, Validators.maxLength(50), Validators.pattern("^([A-ZÁÉÍÓÚ][a-záéíóúñç]{0,20}(( [a-z]{0,3})* [A-ZÁÉÍÓÚ][a-záéíóúñç]{0,20})*)$")]],
       apellidos: [this.data?.apellidos, [Validators.required, Validators.maxLength(50), Validators.pattern("^((( ?[a-z]{0,3} )*[A-ZÁÉÍÓÚ][a-záéíóúñç]{0,20})+)$")]],
@@ -32,7 +34,7 @@ export class FormularioUsuarioComponent {
     this.formulario.valueChanges.subscribe( // statusChanges
       {
         next: (cambios) => {
-          if (this.formulario.valid){
+          if (this.formulario!.valid){
             this.formularioGuay(cambios)
           }else{
             this.formularioRuina()

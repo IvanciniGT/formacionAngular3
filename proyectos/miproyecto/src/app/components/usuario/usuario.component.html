@@ -3,15 +3,18 @@
     <!--BOTONERA-->
     <div class="botones">
         <accion-confirmable
-            *ngIf="(estado === EstadoComponenteUsuario.NORMAL && editable) || estado === EstadoComponenteUsuario.EN_EDICION"
+            *ngIf="(estado === EstadoComponenteUsuario.NORMAL && editable) 
+            || estado === EstadoComponenteUsuario.EN_EDICION
+            || estado === EstadoComponenteUsuario.EDICION_INVALIDA
+            || estado === EstadoComponenteUsuario.EDICION_VALIDA"
             caption="Editar"
             confirmationCaption="Guardar"
             cancellationCaption="Cancelar"
             confirmCancellationCaption="Si, cancelar"
             cancelCancellationCaption="No, lo he pensado mejor"
             confirmationMessage="Perderás los datos no guardados. Estás seguro?"
-            [activateConfirmationButton]="true"
-            [confirmableCancelationButton]="true"
+            [activateConfirmationButton]="estado === EstadoComponenteUsuario.EDICION_VALIDA"
+            [confirmableCancelationButton]="estado !== EstadoComponenteUsuario.EN_EDICION"
             (onAccionSolicitada)="edicionIniciada()"
             (onAccionConfirmada)="edicionConfirmada()"
             (onAccionCancelada)="edicionCancelada()"
@@ -32,6 +35,10 @@
     <div *ngIf="this.estado !== EstadoComponenteUsuario.ERROR &&
                 this.estado !== EstadoComponenteUsuario.REALIZANDO_CARGA">
         <!-- Si no estoy en estado EN_EDICION-->
+            <ng-container *ngIf="this.estado !== EstadoComponenteUsuario.EN_EDICION
+                                && estado !== EstadoComponenteUsuario.EDICION_INVALIDA
+                                && estado !== EstadoComponenteUsuario.EDICION_VALIDA
+            ; else formulario">
                     <!-- if es compacto-->
                     <div *ngIf="this.modoCompacto; else extendido">
                         {{ this.datosDelUsuario!.nombre }}
@@ -46,15 +53,15 @@
                         <div><span>Edad: </span>{{ this.datosDelUsuario!.edad }}</div>
                         <div><span>Email: </span>{{ this.datosDelUsuario!.email }}</div>
                     </ng-template>
+            </ng-container>
         <!-- Si estoy en estado EN_EDICION-->
-                    <!--Formulario-->
-                    <!-- Por qué querría yo crear otro componente formulario?? 
-                        - Para reutilizarlo *** Para en el futuro reaprovecharlo al crear NUEVOS USUARIOS
-                        - Para que este fichero no quedara tan pesado ** Importante
-                    
-                        TODO: Lo haremos  !
-
-                    -->
+            <ng-template #formulario>
+                    <formulario-usuario
+                        [data]="this.datosDelUsuario!"
+                        (onValido)="this.formularioValido($event)"
+                        (onInvalido)="this.formularioInvalido()"
+                    ></formulario-usuario>
+            </ng-template>
         <!-- Con la ! le indico que el dato... aunque él no está seguro de si va a estar, YO SI ESTOY SEGURO, que conozco la lógica de mi programa-->
     </div>
 

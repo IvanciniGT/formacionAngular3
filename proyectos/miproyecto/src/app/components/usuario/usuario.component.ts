@@ -109,6 +109,11 @@ export class UsuarioComponent implements OnInit{
     this.onBorradoConfirmado.emit(this.datosDelUsuario!.id as number)
   }
 
-
+  formularioValido(datos:DatosDeUsuario){
+    this.estado = EstadoComponenteUsuario.EDICION_VALIDA;
+  }
+  formularioInvalido(){
+    this.estado = EstadoComponenteUsuario.EDICION_INVALIDA;
+  }
 }
 

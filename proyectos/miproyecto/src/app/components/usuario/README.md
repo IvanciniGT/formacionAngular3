@@ -10,8 +10,12 @@ stateDiagram-v2
     REALIZANDO_CARGA --> ERROR: Si la carga se hace mal
     NORMAL --> EN_EDICION: Al pulsar en editar.
     note right of EN_EDICION: Solo si soy editable
+    EN_EDICION --> EDICION_VALIDA: Cuando los datos son válidos
+    EN_EDICION --> EDICION_INVALIDA: Cuando los datos son inválidos
     EN_EDICION --> NORMAL: Cuando cancelo
-    EN_EDICION --> NORMAL: Cuando guardo
+    EDICION_INVALIDA --> NORMAL: Cuando cancelo
+    EDICION_VALIDA --> NORMAL: Cuando cancelo
+    EDICION_VALIDA --> NORMAL: Cuando guardo
     NORMAL --> EN_BORRADO: al pulsar en borrar
     note right of EN_BORRADO: Solo si soy borrable
     EN_BORRADO --> NORMAL: Cuando cancelo
