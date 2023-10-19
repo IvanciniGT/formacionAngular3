@@ -18,7 +18,7 @@ export class EjemploFormularioComponent implements OnInit{
             //  v Valor por defecto
             //  v     v Validaciones
       nombre: [null, [ Validators.required, Validators.maxLength(50), Validators.pattern("^([A-ZÁÉÍÓÚ][a-záéíóúñç]{0,20}(( [a-z]{0,3})* [A-ZÁÉÍÓÚ][a-záéíóúñç]{0,20})*)$")] ],
-      apellidos: [ Validators.required, Validators.maxLength(50), Validators.pattern("^((( ?[a-z]{0,3} )*[A-ZÁÉÍÓÚ][a-záéíóúñç]{0,20})+)$")],
+      apellidos: [ null,[ Validators.required, Validators.maxLength(50), Validators.pattern("^((( ?[a-z]{0,3} )*[A-ZÁÉÍÓÚ][a-záéíóúñç]{0,20})+)$")]],
       edad: [null, [ Validators.required, Validators.min(18), Validators.max(120) ]],
       email: [null, [ Validators.email ]],
     }) // Inicializar el formulario
@@ -30,6 +30,10 @@ export class EjemploFormularioComponent implements OnInit{
     // Éstas las usamos para validaciones cruzadas... por ejemplo, que la edad sea menor que la fecha de nacimiento
     // this.formulario.addAsyncValidators
 
+  }
+
+  enviarFormulario(){
+    console.log(this.formulario)
   }
 
 }

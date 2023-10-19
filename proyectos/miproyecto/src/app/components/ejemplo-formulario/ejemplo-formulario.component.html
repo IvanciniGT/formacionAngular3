@@ -2,22 +2,88 @@
 
     <h2>Superformulario</h2>
 
-    <form [formGroup]="formulario">
-        <div class="campo">
-            <label for=""nombre>Nombre:</label>
+    <form [formGroup]="formulario" (ngSubmit)="enviarFormulario()">
+        <div [ngClass]="['campo',
+        !formulario.get('nombre')?.dirty ? 'sin-tocar' : 
+        formulario.get('nombre')?.valid ? 'valido' : 'error'
+        ]">
+            <label 
+                for="nombre">Nombre:</label>
+               
             <input type="text" formControlName="nombre">
-        </div>        
-        <div class="campo">
-            <label for=""apellido>Apellido:</label>
-            <input type="text" formControlName="apellido">
+
+            <div class="mensaje-error" 
+            *ngIf="formulario.get('nombre')?.errors?.['required'] && formulario.get('nombre')?.touched">
+                El nombre es obligatorio
+            </div>
+            <div class="mensaje-error" 
+            *ngIf="formulario.get('nombre')?.errors?.['pattern'] && formulario.get('nombre')?.touched">
+                Recuerde que en Español, los nombres deben comenzar por MAYÚSCULA. 
+                Si hay preposiciones o artículos, éstos deben ir en minúscula.
+            </div>
+
         </div>
         <div class="campo">
-            <label for=""email>Email:</label>
-            <input type="text" formControlName="email">
+            <label 
+                [ngClass]="[
+                    !formulario.get('apellidos')?.dirty ? 'sin-tocar' : 
+                    formulario.get('apellidos')?.valid ? 'valido' : 'error'
+                ]"
+                for="apellidos">Apellidos:</label>
+            <input type="text" formControlName="apellidos">
+
+            <div class="mensaje-error" 
+            *ngIf="formulario.get('apellidos')?.errors?.['required'] && formulario.get('apellidos')?.touched">
+                Los apellidos son obligatorios
+            </div>
+            <div class="mensaje-error" 
+            *ngIf="formulario.get('apellidos')?.errors?.['pattern'] && formulario.get('apellidos')?.touched">
+                Recuerde que en Español, los apellidos deben comenzar por MAYÚSCULA. 
+                Si hay preposiciones o artículos, éstos deben ir en minúscula.
+            </div>
+        </div>
+
+        <div class="campo">
+            <label 
+                [ngClass]="[
+                    !formulario.get('email')?.dirty ? 'sin-tocar' : 
+                    formulario.get('email')?.valid ? 'valido' : 'error'
+                ]"
+                for="email">Email:</label>
+            <input type="email" formControlName="email">
+
+            <div class="mensaje-error" 
+            *ngIf="formulario.get('email')?.errors?.['email'] && formulario.get('email')?.touched">
+                El email no es válido
+            </div>
         </div>
         <div class="campo">
-            <label for=""password>Edad:</label>
+            <label 
+                [ngClass]="[
+                    !formulario.get('edad')?.dirty ? 'sin-tocar' : 
+                    formulario.get('edad')?.valid ? 'valido' : 'error'
+                ]"
+                for="edad">Edad:</label>
             <input type="number" formControlName="edad">
+
+            <div class="mensaje-error" 
+            *ngIf="formulario.get('edad')?.errors?.['required'] && formulario.get('edad')?.touched">
+                La edad es obligatoria
+            </div>
+            <div class="mensaje-error" 
+            *ngIf="formulario.get('edad')?.errors?.['min'] && formulario.get('edad')?.touched">
+                La edad debe ser mayor de 18 años
+            </div>
+            <div class="mensaje-error" 
+            *ngIf="formulario.get('edad')?.errors?.['max'] && formulario.get('edad')?.touched">
+                La edad debe ser menor de 120 años
+            </div>
+        </div>
+
+        <div class="botones">
+            <button type="submit"
+                [disabled]="formulario.invalid"
+            >Enviar</button>
         </div>
     </form>
 

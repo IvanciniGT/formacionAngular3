@@ -1,0 +1,17 @@
+.mensaje-error {
+    color: red;
+}
+.error {
+    color: red;
+}
+.valido {
+    color: green;
+}
+.sin-tocar{
+    color: black;
+}
+
+div.campo.error input{
+    border: solid 3px red;
+    color: red;
+}
