@@ -113,63 +113,72 @@
                 <option value="otro">Otro</option>
             </select>
         </div>
-        
 
-        <!--direccion---->
-        <div class="fila-campos">
-            <label for="direccion">Via:</label>
-            <input type="text" formControlName="via">
-            <label for="numero">Número:</label>
-            <input type="text" formControlName="numero">
-            <label for="poblacion">Población:</label>
-            <input type="text" formControlName="poblacion">
-            <label for="cp">CP:</label>
-            <input type="text" formControlName="cp">
+        <div class="direcciones" formArrayName="direcciones">
+            <h3> Direcciones </h3>
 
-            <div class="mensaje-error" 
-            *ngIf="formulario.get('via')?.errors?.['required'] && formulario.get('via')?.touched">
-                La via es obligatoria
-            </div>
-            <div class="mensaje-error" 
-            *ngIf="formulario.get('via')?.errors?.['maxlength'] && formulario.get('via')?.touched">
-                No debe poner más de 100 caracteres en la via
-            </div>
+            <!--direccion---->
+            <div class="fila-campos"
+                *ngFor="let direccion of direcciones.controls; let posicion=index" [formGroupName]="posicion"
+            >
+                <label for="direccion">Via:</label>
+                <input type="text" formControlName="via">
+                <label for="numero">Número:</label>
+                <input type="text" formControlName="numero">
+                <label for="poblacion">Población:</label>
+                <input type="text" formControlName="poblacion">
+                <label for="cp">CP:</label>
+                <input type="text" formControlName="cp">
 
-
-            <div class="mensaje-error" 
-            *ngIf="formulario.get('numero')?.errors?.['required'] && formulario.get('numero')?.touched">
-                El número es obligatorio
-            </div>
-            <div class="mensaje-error" 
-            *ngIf="formulario.get('numero')?.errors?.['maxlength'] && formulario.get('numero')?.touched">
-                No debe poner más de 10 caracteres en el número
-            </div>
+                <div class="mensaje-error" 
+                *ngIf="formulario.get('via')?.errors?.['required'] && formulario.get('via')?.touched">
+                    La via es obligatoria
+                </div>
+                <div class="mensaje-error" 
+                *ngIf="formulario.get('via')?.errors?.['maxlength'] && formulario.get('via')?.touched">
+                    No debe poner más de 100 caracteres en la via
+                </div>
 
 
-            <div class="mensaje-error" 
-            *ngIf="formulario.get('poblacion')?.errors?.['required'] && formulario.get('poblacion')?.touched">
-                La poblacion es obligatoria
-            </div>
-            <div class="mensaje-error" 
-            *ngIf="formulario.get('poblacion')?.errors?.['maxlength'] && formulario.get('poblacion')?.touched">
-                No debe poner más de 50 caracteres en la poblacion
-            </div>
+                <div class="mensaje-error" 
+                *ngIf="formulario.get('numero')?.errors?.['required'] && formulario.get('numero')?.touched">
+                    El número es obligatorio
+                </div>
+                <div class="mensaje-error" 
+                *ngIf="formulario.get('numero')?.errors?.['maxlength'] && formulario.get('numero')?.touched">
+                    No debe poner más de 10 caracteres en el número
+                </div>
 
 
-            <div class="mensaje-error" 
-            *ngIf="formulario.get('cp')?.errors?.['required'] && formulario.get('cp')?.touched">
-                El cp es obligatorio
+                <div class="mensaje-error" 
+                *ngIf="formulario.get('poblacion')?.errors?.['required'] && formulario.get('poblacion')?.touched">
+                    La poblacion es obligatoria
+                </div>
+                <div class="mensaje-error" 
+                *ngIf="formulario.get('poblacion')?.errors?.['maxlength'] && formulario.get('poblacion')?.touched">
+                    No debe poner más de 50 caracteres en la poblacion
+                </div>
+
+
+                <div class="mensaje-error" 
+                *ngIf="formulario.get('cp')?.errors?.['required'] && formulario.get('cp')?.touched">
+                    El cp es obligatorio
+                </div>
+                <div class="mensaje-error" 
+                *ngIf="formulario.get('cp')?.errors?.['pattern'] && formulario.get('cp')?.touched">
+                    CP NO VALIDO !!!!
+                </div>
             </div>
-            <div class="mensaje-error" 
-            *ngIf="formulario.get('cp')?.errors?.['pattern'] && formulario.get('cp')?.touched">
-                CP NO VALIDO !!!!
-            </div>
+
+            <button (click)="nuevaDireccion()">Nueva dirección</button>
         </div>
 
         <div class="botones">
             <button type="submit"
                 [disabled]="formulario.invalid"
             >Enviar</button>
+            <button type="reset"
+            >Limpiar</button>
         </div>
     </form>
 

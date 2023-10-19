@@ -1,34 +1,42 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'ejemplo-formulario',
   templateUrl: './ejemplo-formulario.component.html',
   styleUrls: ['./ejemplo-formulario.component.css']
 })
-export class EjemploFormularioComponent implements OnInit{
+export class EjemploFormularioComponent implements OnInit {
 
   formulario!: FormGroup // Es un formulario
+  direcciones!: FormArray // Es una lista de formularios
 
   constructor(private formBuilder: FormBuilder) { // Inyección de dependencias
   }
 
   ngOnInit(): void {
+    this.direcciones = this.formBuilder.array([]) // Creando un array vacio de formularios de direcciones
     this.formulario = this.formBuilder.group({
-            //  v Valor por defecto
-            //  v     v Validaciones
-      nombre: [null, [ Validators.required, Validators.maxLength(50), Validators.pattern("^([A-ZÁÉÍÓÚ][a-záéíóúñç]{0,20}(( [a-z]{0,3})* [A-ZÁÉÍÓÚ][a-záéíóúñç]{0,20})*)$")] ],
-      apellidos: [ null,[ Validators.required, Validators.maxLength(50), Validators.pattern("^((( ?[a-z]{0,3} )*[A-ZÁÉÍÓÚ][a-záéíóúñç]{0,20})+)$")]],
-      edad: [null, [ Validators.required, Validators.min(18), Validators.max(120) ]],
-      email: [null, [ Validators.email ]],
-      conduce: [null, [ Validators.required ]],
+      //  v Valor por defecto
+      //  v     v Validaciones
+      nombre: [null, [Validators.required, Validators.maxLength(50), Validators.pattern("^([A-ZÁÉÍÓÚ][a-záéíóúñç]{0,20}(( [a-z]{0,3})* [A-ZÁÉÍÓÚ][a-záéíóúñç]{0,20})*)$")]],
+      apellidos: [null, [Validators.required, Validators.maxLength(50), Validators.pattern("^((( ?[a-z]{0,3} )*[A-ZÁÉÍÓÚ][a-záéíóúñç]{0,20})+)$")]],
+      edad: [null, [Validators.required, Validators.min(18), Validators.max(120)]],
+      email: [null, [Validators.email]],
+      conduce: [null, [Validators.required]],
       vehiculo: [null],
-      genero: ["ns/nc", [ Validators.required ]],
-      via: [null, [ Validators.required , Validators.maxLength(100)]],
-      numero: [null, [ Validators.required , Validators.maxLength(100)]],
-      poblacion: [null, [ Validators.required , Validators.maxLength(50)]],
-      cp: [null, [ Validators.required ,Validators.pattern("^[0-9]{4,5}$")]]
+      genero: ["ns/nc", [Validators.required]],
+      direcciones: this.direcciones
+    });
+  }
+  nuevaDireccion() {
+    let direccion = this.formBuilder.group({
+      via: [null, [Validators.required, Validators.maxLength(100)]],
+      numero: [null, [Validators.required, Validators.maxLength(100)]],
+      poblacion: [null, [Validators.required, Validators.maxLength(50)]],
+      cp: [null, [Validators.required, Validators.pattern("^[0-9]{4,5}$")]]
     }) // Inicializar el formulario
+    this.direcciones.push(direccion) // Añadir el formulario al array de direcciones
 
     // Las validaciones que hemos puesto arriba, son validaciones que se aplican campo a campo... de forma independiente
     // Esas validaciones se van ejecutando de forma asíncrona, a medida que el usuario va escribiendo en el formulario
@@ -39,8 +47,9 @@ export class EjemploFormularioComponent implements OnInit{
 
   }
 
-  enviarFormulario(){
-    console.log(this.formulario)
+  enviarFormulario() {
+    //console.log(this.formulario)
+    console.log(this.formulario.value)
   }
 
 }
@@ -123,6 +132,11 @@ Cuál?
 
    BBDD
 
+
+
+   1 - Que salgan bien los mensajes de la validación de direcciones
+   2 - Que eliminar pida confirmación y borre las direcciones
+   3 - Borrar 1 dirección... con confirmación
 */
 
 
