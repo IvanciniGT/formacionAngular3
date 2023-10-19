@@ -114,6 +114,31 @@
             </select>
         </div>
 
+        <!--dni -->
+        <div class="campo">
+            <label 
+                [ngClass]="[
+                    !formulario.get('dni')?.dirty ? 'sin-tocar' : 
+                    formulario.get('dni')?.valid ? 'valido' : 'error'
+                ]"
+                for="dni">DNI:</label>
+            <input type="text" formControlName="dni">
+
+            <div class="mensaje-error" 
+            *ngIf="formulario.get('dni')?.errors?.['required'] && formulario.get('dni')?.touched">
+                El dni es obligatorio
+            </div>
+            <div class="mensaje-error" 
+            *ngIf="formulario.get('dni')?.errors?.['pattern'] && formulario.get('dni')?.touched">
+                El dni no tiene un formato válido
+            </div>
+            <div class="mensaje-error" 
+            *ngIf="formulario.get('dni')?.errors?.['dniInvalido'] && formulario.get('dni')?.touched">
+                La letra del DNI es una castaña!
+            </div>
+        </div>
+
+
         <div class="direcciones" formArrayName="direcciones">
             <h3> Direcciones </h3>
 
@@ -130,44 +155,53 @@
                 <label for="cp">CP:</label>
                 <input type="text" formControlName="cp">
 
+                <accion-confirmable
+                    caption="Borrar"
+                    confirmationCaption="Si si, borralo"
+                    cancellationCaption="Cancelar"
+                    (onAccionConfirmada)="borrarDireccion(posicion)"
+                ></accion-confirmable>
+
                 <div class="mensaje-error" 
-                *ngIf="formulario.get('via')?.errors?.['required'] && formulario.get('via')?.touched">
+                *ngIf="direccion.get('via')?.errors?.['required'] && direccion.get('via')?.touched">
                     La via es obligatoria
                 </div>
                 <div class="mensaje-error" 
-                *ngIf="formulario.get('via')?.errors?.['maxlength'] && formulario.get('via')?.touched">
+                *ngIf="direccion.get('via')?.errors?.['maxlength'] && direccion.get('via')?.touched">
                     No debe poner más de 100 caracteres en la via
                 </div>
 
 
                 <div class="mensaje-error" 
-                *ngIf="formulario.get('numero')?.errors?.['required'] && formulario.get('numero')?.touched">
+                *ngIf="direccion.get('numero')?.errors?.['required'] && direccion.get('numero')?.touched">
                     El número es obligatorio
                 </div>
                 <div class="mensaje-error" 
-                *ngIf="formulario.get('numero')?.errors?.['maxlength'] && formulario.get('numero')?.touched">
+                *ngIf="direccion.get('numero')?.errors?.['maxlength'] && direccion.get('numero')?.touched">
                     No debe poner más de 10 caracteres en el número
                 </div>
 
 
                 <div class="mensaje-error" 
-                *ngIf="formulario.get('poblacion')?.errors?.['required'] && formulario.get('poblacion')?.touched">
+                *ngIf="direccion.get('poblacion')?.errors?.['required'] && direccion.get('poblacion')?.touched">
                     La poblacion es obligatoria
                 </div>
                 <div class="mensaje-error" 
-                *ngIf="formulario.get('poblacion')?.errors?.['maxlength'] && formulario.get('poblacion')?.touched">
+                *ngIf="direccion.get('poblacion')?.errors?.['maxlength'] && direccion.get('poblacion')?.touched">
                     No debe poner más de 50 caracteres en la poblacion
                 </div>
 
 
                 <div class="mensaje-error" 
-                *ngIf="formulario.get('cp')?.errors?.['required'] && formulario.get('cp')?.touched">
+                *ngIf="direccion.get('cp')?.errors?.['required'] && direccion.get('cp')?.touched">
                     El cp es obligatorio
                 </div>
                 <div class="mensaje-error" 
-                *ngIf="formulario.get('cp')?.errors?.['pattern'] && formulario.get('cp')?.touched">
+                *ngIf="direccion.get('cp')?.errors?.['pattern'] && direccion.get('cp')?.touched">
                     CP NO VALIDO !!!!
                 </div>
+
+        
             </div>
 
             <button (click)="nuevaDireccion()">Nueva dirección</button>
@@ -177,8 +211,13 @@
             <button type="submit"
                 [disabled]="formulario.invalid"
             >Enviar</button>
-            <button type="reset"
-            >Limpiar</button>
+            
+                <accion-confirmable
+                    caption="Limpiar"
+                    confirmationCaption="Si si, limpialo"
+                    cancellationCaption="Cancelar"
+                    (onAccionConfirmada)="limpiarFormulario()"
+                ></accion-confirmable>
         </div>
     </form>
 

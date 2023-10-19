@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'ejemplo-formulario',
@@ -26,7 +27,8 @@ export class EjemploFormularioComponent implements OnInit {
       conduce: [null, [Validators.required]],
       vehiculo: [null],
       genero: ["ns/nc", [Validators.required]],
-      direcciones: this.direcciones
+      direcciones: this.direcciones,
+      dni: [null, [Validators.required, Validators.pattern("^[0-9]{1,8}[A-Z]$")], [EjemploFormularioComponent.validarCampoDNI]]
     });
   }
   nuevaDireccion() {
@@ -46,10 +48,39 @@ export class EjemploFormularioComponent implements OnInit {
     // this.formulario.addAsyncValidators
 
   }
-
+  borrarDireccion(posicion:number){
+    this.direcciones.removeAt(posicion)
+  }
+  limpiarFormulario() {
+    this.direcciones.clear()
+    this.formulario.reset()
+  }
   enviarFormulario() {
     //console.log(this.formulario)
     console.log(this.formulario.value)
+  }
+
+  static validarCampoDNI(campoConUnDNI: AbstractControl): Observable<ValidationErrors | null>{
+/*
+    if(!campoConUnDNI.value) return of(null);
+    let esValido = EjemploFormularioComponent.validarDNI(campoConUnDNI.value)
+    if(esValido){
+      return of(null)
+    }else{
+      return of({dniInvalido:true})
+    }
+*/
+    var aDevolver:ValidationErrors | null= null
+    if(campoConUnDNI.value && !EjemploFormularioComponent.validarDNI(campoConUnDNI.value))
+      aDevolver = {dniInvalido:true}
+    return of(aDevolver)
+  }
+
+  static validarDNI(dni:String):boolean{
+    let letrasValidas="TRWAGMYFPDXBNJZSQVHLCKE"
+    let numero = parseInt(dni.substring(0,dni.length-1))
+    let valido = letrasValidas[numero % 23] === dni[dni.length-1]
+    return valido
   }
 
 }
