@@ -7,16 +7,19 @@ import { UsuarioServiceFake } from './service/impl/usuario.service.fake';
 import { UsuariosService } from './service/usuario.service';
 import { AccionConfirmableComponent } from './components/accion-confirmable/accion-confirmable.component';
 import { ListadoUsuariosComponent } from './components/listado-usuarios/listado-usuarios.component';
+import { EjemploFormularioComponent } from './components/ejemplo-formulario/ejemplo-formulario.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 // LENGUAJE DECLARATIVO
 @NgModule({
   declarations: [ // Componentes web
     AppComponent, 
     UsuarioComponent, 
-    AccionConfirmableComponent, ListadoUsuariosComponent
+    AccionConfirmableComponent, ListadoUsuariosComponent, EjemploFormularioComponent
   ],
   imports: [      // Necesitará de algunos paquetes adicionales para funcionar... algunos de angular... otros no...... que angular tendrá que arrancar
-    BrowserModule
+    BrowserModule,
+    ReactiveFormsModule
   ],
   providers: [
     { provide: UsuariosService, useClass: UsuarioServiceFake}
