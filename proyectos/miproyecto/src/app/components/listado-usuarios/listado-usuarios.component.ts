@@ -91,8 +91,14 @@ export class ListadoUsuariosComponent implements OnInit {
       throw new Error("No se puede confirmar un borrado que no está en curso") // BUG MIO
     this.estado = EstadosComponenteListadoUsuarios.NORMAL
     this.usuarioConOperacionEnCurso = undefined
-    this.listadoDeUsuarios = this.listadoDeUsuarios!.filter(usuario => usuario.id !== userId)
-    this.buscar() // Para que se rellene el listado a mostrar
+  
+    this.servicioDeUsuarios.borrarUsuario(userId).subscribe({
+      next: () => {
+        this.listadoDeUsuarios = this.listadoDeUsuarios!.filter(usuario => usuario.id !== userId)
+        this.buscar() // Para que se rellene el listado a mostrar    
+      },
+      error: (error: any) => console.error("Error borrando usuario", error)
+    })
     // TODO: Mandarlo a un servicio
   }
 

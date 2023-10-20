@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './components/app/app.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
@@ -14,6 +15,7 @@ import { ComponenteAComponent } from './components/componente-a/componente-a.com
 import { ComponenteBComponent } from './components/componente-b/componente-b.component';
 import { ServicioService } from './service/servicio-prueba/servicio.service';
 import { ServicioServiceImpl } from './service/servicio-prueba/servicio.service.impl';
+import { UsuarioServiceImpl } from './service/impl/usuario.service.impl';
 
 // LENGUAJE DECLARATIVO
 @NgModule({
@@ -29,10 +31,11 @@ import { ServicioServiceImpl } from './service/servicio-prueba/servicio.service.
   ],
   imports: [      // Necesitará de algunos paquetes adicionales para funcionar... algunos de angular... otros no...... que angular tendrá que arrancar
     BrowserModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [
-    { provide: UsuariosService, useClass: UsuarioServiceFake},
+    { provide: UsuariosService, useClass: UsuarioServiceImpl},
     { provide: ServicioService, useClass: ServicioServiceImpl}
     // Cuando alguien te pida un UsuarioService, que ofrezca una instancia de un UsuarioServiceFake
   ],  // Los componentes de mi módulo, necesitarán dependencias...

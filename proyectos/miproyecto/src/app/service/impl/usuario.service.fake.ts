@@ -7,6 +7,10 @@ import { Injectable } from "@angular/core";
 // Le indico a Angular que puede usar una instancia de esta clase, 
 // cuando alguien le solicite una instancia de la interfaz UsuariosService
 export class UsuarioServiceFake extends UsuariosService {
+    
+    override borrarUsuario(id: number): Observable<Object> {
+        throw new Error("Method not implemented.");
+    }
     override getDatosDeTodosLosUsuariosDelMundoMundial(): Observable<DatosDeUsuario[]> {
         return of([
             {
