@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { EstadoComponenteUsuario } from './usuario.component.states';
 import { DatosDeUsuario } from 'src/app/models/usuario.model';
 import { UsuariosService } from 'src/app/service/usuario.service';
@@ -8,7 +8,7 @@ import { UsuariosService } from 'src/app/service/usuario.service';
   templateUrl: './usuario.component.html', // Esta clase lleva asociada esta plantilla
   styleUrls: ['./usuario.component.css']
 })
-export class UsuarioComponent implements OnInit{
+export class UsuarioComponent implements OnInit, OnChanges{
 
   @Input() // Atributo de entrada para la marca HTML
   data!: DatosDeUsuario | number // !: No te preocupes que el dato te llega... es obligatorio
@@ -17,7 +17,11 @@ export class UsuarioComponent implements OnInit{
   @Input()
   borrable = false
   @Input()
-  modoCompacto = false
+  modoCompacto = false  
+  @Input()
+  seleccionado = false
+  @Input()
+  seleccionable = false
 
   @Output() 
   onBorradoSolicitado=new EventEmitter<number>()
@@ -37,7 +41,12 @@ export class UsuarioComponent implements OnInit{
   onCargaIniciada=new EventEmitter<number>()
   @Output() 
   onError=new EventEmitter<number>()
-
+  @Output() 
+  onSeleccionado=new EventEmitter<number>()
+  @Output() 
+  onDeseleccionado=new EventEmitter<number>()
+  
+  
   estado: EstadoComponenteUsuario = EstadoComponenteUsuario.INICIANDO
   datosDelUsuario?: DatosDeUsuario // Estos son los que saco por pantalla
   // La plantilla html solo tiene acceso a los datos/funciones del componente asociado
@@ -49,7 +58,18 @@ export class UsuarioComponent implements OnInit{
   constructor(private servicioDeUsuarios: UsuariosService){ // Solicito una inyección de dependencias... A quién? a ANGULAR !
     // AQUI PONGO DE NADA A MENOS CODIGO... en general
   }
-
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['seleccionado']){
+      this.seleccionForzada()
+    }
+  }
+  seleccionForzada(){
+    if(this.seleccionado) {
+      this.estado = EstadoComponenteUsuario.SELECCIONADO
+    } else{
+      this.estado = EstadoComponenteUsuario.NORMAL
+    }
+  }
   ngOnInit(): void { // Esta función se invocará cuando Angular injecte el componente WEB en el DOM HTML del navegador
                      // Normalmente aquí es donde hacemos esas capturas de información... inicializaciones
     if( typeof this.data === 'number'){     // me han pasado el id
@@ -76,7 +96,7 @@ export class UsuarioComponent implements OnInit{
   }
   datosCargados(datos: DatosDeUsuario){
     this.datosDelUsuario = datos
-    this.estado = EstadoComponenteUsuario.NORMAL
+    this.seleccionForzada()
     this.onCargado.emit(this.datosDelUsuario.id)
   }
   errorEnCargaDeDatos(error:any){
@@ -113,7 +133,19 @@ export class UsuarioComponent implements OnInit{
     this.estado = EstadoComponenteUsuario.EDICION_VALIDA;
   }
   formularioInvalido(){
+    console.log("formulario invalido")
     this.estado = EstadoComponenteUsuario.EDICION_INVALIDA;
+  }
+  toogleSeleccionado(){
+    if(this.seleccionable){
+      if(this.estado === EstadoComponenteUsuario.SELECCIONADO){
+        this.estado = EstadoComponenteUsuario.NORMAL;
+        this.onDeseleccionado.emit(this.datosDelUsuario!.id as number)
+      } else{
+        this.estado = EstadoComponenteUsuario.SELECCIONADO;
+        this.onSeleccionado.emit(this.datosDelUsuario!.id as number)
+      }
+    }
   }
 }
 

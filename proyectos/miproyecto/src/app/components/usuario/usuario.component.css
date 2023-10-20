@@ -2,3 +2,6 @@
     border: solid 1px black;
     margin: 5px;
 }
+.seleccionado {
+    background-color: #ccc !important;
+}

@@ -11,21 +11,47 @@
                 (onchange)="programarBusqueda(inputBuscador.value)"
         >
     </div>
+    <div class="botones">
+        <button (click)="todosUsuariosSeleccionados()"
+        *ngIf="estado === Estado.NORMAL 
+            || estado === Estado.ALGUN_USUARIO_SELECCIONADO
+            || estado === Estado.TODOS_USUARIOS_SELECCIONADOS"
+        [disabled]="estado === Estado.TODOS_USUARIOS_SELECCIONADOS"
+        >Seleccionar todos</button>
+        <button (click)="deseleccionarUsuariosSeleccionados()"
+        *ngIf="estado === Estado.NORMAL 
+            || estado === Estado.ALGUN_USUARIO_SELECCIONADO
+            || estado === Estado.TODOS_USUARIOS_SELECCIONADOS"
+        [disabled]="estado === Estado.NORMAL"
+        >Deseleccionar todos</button>        
+    </div>
     <!--Listado de los usuarios-->
     <div class="usuarios">
         <usuario 
             *ngFor="let usuarioActual of usuariosAMostrar"
             [data]="usuarioActual"
+            
             [borrable]="( usuariosBorrables && estado === Estado.NORMAL) ||
                         ( estado === Estado.USUARIO_EN_BORRADO && usuarioConOperacionEnCurso === usuarioActual.id )"
             [editable]="( usuariosEditables && estado === Estado.NORMAL) ||
                         ( estado === Estado.USUARIO_EN_EDICION && usuarioConOperacionEnCurso === usuarioActual.id )"
+            [seleccionable]="usuariosBorrables && (estado === Estado.NORMAL 
+                                || estado === Estado.ALGUN_USUARIO_SELECCIONADO
+                                || estado === Estado.TODOS_USUARIOS_SELECCIONADOS)"
+            [seleccionado]="usuariosSeleccionados.includes(usuarioActual.id)"
+
+
+            (onSeleccionado)="nuevoUsuarioSeleccionado(usuarioActual.id)"
+            (onDeseleccionado)="usuarioDeseleccionado(usuarioActual.id)"
+
+
             (onBorradoSolicitado)="usuarioEnBorrado(usuarioActual.id)"
             (onBorradoCancelado)="borradoCanceladoParaUsuario(usuarioActual.id)"
             (onBorradoConfirmado)="borradoConfirmadoParaUsuario(usuarioActual.id)"
             (onEditadoSolicitado)="usuarioEnEdicion(usuarioActual.id)"
             (onEditadoCancelado)="edicionCanceladaParaUsuario(usuarioActual.id)"
             (onEditadoConfirmado)="edicionConfirmadaParaUsuario(usuarioActual.id)"
+
         ></usuario>
     </div>
 </div>

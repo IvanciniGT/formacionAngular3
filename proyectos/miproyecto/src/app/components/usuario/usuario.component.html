@@ -1,4 +1,6 @@
-<div id="datos-usuario">
+<div id="datos-usuario" (click)="toogleSeleccionado()" 
+    [ngClass]="[estado === EstadoComponenteUsuario.SELECCIONADO ? 'seleccionado': '']"
+    >
 
     <!--BOTONERA-->
     <div class="botones">

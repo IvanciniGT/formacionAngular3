@@ -48,17 +48,20 @@ export class AccionConfirmableComponent {
   constructor() { 
   }
 
-  accionSolicitada() {
+  accionSolicitada(evento: Event) {
     this.estado = ESTADOS_DE_LA_ACCION_CONFIRMABLE.ACCION_SOLICITADA
     this.onAccionSolicitada.emit()
+    evento.stopPropagation()
   }
-  accionConfirmada() {
+  accionConfirmada(evento: Event) {
     this.estado = ESTADOS_DE_LA_ACCION_CONFIRMABLE.PENDIENTE_SOLICITAR_LA_ACCION
     this.onAccionConfirmada.emit()
+    evento.stopPropagation()
   }
-  accionCancelada() {
+  accionCancelada(evento?: Event) {
     this.estado = ESTADOS_DE_LA_ACCION_CONFIRMABLE.PENDIENTE_SOLICITAR_LA_ACCION
     this.onAccionCancelada.emit()
+    evento?.stopPropagation()
   }
   solicitadaCancelacion() {
     this.estado = ESTADOS_DE_LA_ACCION_CONFIRMABLE.PENDIENTE_CONFIRMAR_CANCELACION

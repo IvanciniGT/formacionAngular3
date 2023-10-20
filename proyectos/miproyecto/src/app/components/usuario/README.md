@@ -17,6 +17,8 @@ stateDiagram-v2
     EDICION_VALIDA --> NORMAL: Cuando cancelo
     EDICION_VALIDA --> NORMAL: Cuando guardo
     NORMAL --> EN_BORRADO: al pulsar en borrar
+    NORMAL --> SELECCIONADO: Cuando me hacen click si soy seleccionable
+    SELECCIONADO --> NORMAL: Cuando me hacen click
     note right of EN_BORRADO: Solo si soy borrable
     EN_BORRADO --> NORMAL: Cuando cancelo
     EN_BORRADO --> NORMAL: Cuando confirmo

@@ -7,4 +7,5 @@ export enum EstadoComponenteUsuario {
     EDICION_VALIDA,
     EDICION_INVALIDA,
     EN_BORRADO,
+    SELECCIONADO
 }

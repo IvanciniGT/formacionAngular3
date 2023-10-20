@@ -23,6 +23,7 @@ export class ListadoUsuariosComponent implements OnInit {
   usuarioConOperacionEnCurso?: number
   listadoDeUsuarios?: DatosDeUsuario[];
   usuariosAMostrar: DatosDeUsuario[] = [];
+  usuariosSeleccionados: number[] = [];
 
   constructor(private servicioDeUsuarios: UsuariosService) { }
 
@@ -108,4 +109,31 @@ export class ListadoUsuariosComponent implements OnInit {
       this.buscar(texto)
     }, 200 )
   }
+
+  nuevoUsuarioSeleccionado(userId: number) {
+    this.usuariosSeleccionados.push(userId)
+    if(this.usuariosSeleccionados.length === this.usuariosAMostrar.length)
+      this.estado = EstadosComponenteListadoUsuarios.TODOS_USUARIOS_SELECCIONADOS
+    else
+      this.estado = EstadosComponenteListadoUsuarios.ALGUN_USUARIO_SELECCIONADO
+  }
+
+  usuarioDeseleccionado(userId: number) {
+    this.usuariosSeleccionados = this.usuariosSeleccionados.filter(id => id !== userId)
+    if(this.usuariosSeleccionados.length > 0)
+      this.estado = EstadosComponenteListadoUsuarios.ALGUN_USUARIO_SELECCIONADO
+    else
+      this.estado = EstadosComponenteListadoUsuarios.NORMAL
+  }
+
+  todosUsuariosSeleccionados() {
+    this.usuariosSeleccionados = this.usuariosAMostrar.map(usuario => usuario.id)
+    this.estado = EstadosComponenteListadoUsuarios.TODOS_USUARIOS_SELECCIONADOS
+  }
+
+  deseleccionarUsuariosSeleccionados() {
+    this.usuariosSeleccionados = []
+    this.estado = EstadosComponenteListadoUsuarios.NORMAL
+  }
+
 }

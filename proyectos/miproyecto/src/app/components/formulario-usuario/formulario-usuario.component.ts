@@ -15,6 +15,7 @@ export class FormularioUsuarioComponent implements OnInit{
 
   @Output()
   onValido = new EventEmitter<DatosDeUsuario>()
+  @Output()
   onInvalido = new EventEmitter<void>()
 
   Estados = EstadosComponenteFormularioUsuario
@@ -31,17 +32,15 @@ export class FormularioUsuarioComponent implements OnInit{
       edad: [this.data?.edad, [Validators.required, Validators.min(18), Validators.max(120)]],
       email: [this.data?.email, [Validators.email]]
     })
-    this.formulario.valueChanges.subscribe( // statusChanges
-      {
-        next: (cambios) => {
-          if (this.formulario!.valid){
-            this.formularioGuay(cambios)
-          }else{
-            this.formularioRuina()
-          }
-        }
-      }
-    )
+    this.formulario.valueChanges.subscribe( { next: () => this.checkFormulario() } )
+  }
+
+  checkFormulario(){
+    if (this.formulario!.valid){
+      this.formularioGuay(this.formulario!.value)
+    }else{
+      this.formularioRuina()
+    }
   }
 
   formularioGuay(datos:DatosDeUsuario){
@@ -49,8 +48,9 @@ export class FormularioUsuarioComponent implements OnInit{
     this.onValido.emit(datos)
   }
   formularioRuina(){
-    if (this.estado !== EstadosComponenteFormularioUsuario.MAL)
+    if (this.estado !== EstadosComponenteFormularioUsuario.MAL){
       this.onInvalido.emit()
+    }
     this.estado = EstadosComponenteFormularioUsuario.MAL
   }
 }
