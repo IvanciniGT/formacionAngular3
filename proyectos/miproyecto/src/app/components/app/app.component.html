@@ -1,16 +1,37 @@
 <div>
     <h1>Mi super app</h1>
 
+    <app-componente-a></app-componente-a>
+    <app-componente-a></app-componente-a>
+    <app-componente-a></app-componente-a>
+    <app-componente-b></app-componente-b>
+    <app-componente-b></app-componente-b>
+    <app-componente-b></app-componente-b>
+    <app-componente-b></app-componente-b>
+    <app-componente-b></app-componente-b>
+    <app-componente-b></app-componente-b>
+    <app-componente-b></app-componente-b>
+    <app-componente-b></app-componente-b>
+    <app-componente-b></app-componente-b>
+    <hr/>
+
     <ejemplo-formulario></ejemplo-formulario>
 
     <hr/>
 
+    <h2>Revisores de un expediente</h2>
     <listado-usuarios
         [buscador]="true"
         [usuariosEditables]="true"
         [usuariosBorrables]="true"
     >
-
+    </listado-usuarios>
+    <h2>Aprobadores de un expediente</h2>
+    <listado-usuarios
+        [buscador]="true"
+        [usuariosEditables]="true"
+        [usuariosBorrables]="true"
+    >
     </listado-usuarios>
 
     <hr/>

@@ -10,20 +10,30 @@ import { ListadoUsuariosComponent } from './components/listado-usuarios/listado-
 import { EjemploFormularioComponent } from './components/ejemplo-formulario/ejemplo-formulario.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormularioUsuarioComponent } from './components/formulario-usuario/formulario-usuario.component';
+import { ComponenteAComponent } from './components/componente-a/componente-a.component';
+import { ComponenteBComponent } from './components/componente-b/componente-b.component';
+import { ServicioService } from './service/servicio-prueba/servicio.service';
+import { ServicioServiceImpl } from './service/servicio-prueba/servicio.service.impl';
 
 // LENGUAJE DECLARATIVO
 @NgModule({
   declarations: [ // Componentes web
     AppComponent, 
     UsuarioComponent, 
-    AccionConfirmableComponent, ListadoUsuariosComponent, EjemploFormularioComponent, FormularioUsuarioComponent
+    AccionConfirmableComponent, 
+    ListadoUsuariosComponent, 
+    EjemploFormularioComponent, 
+    FormularioUsuarioComponent, 
+    ComponenteAComponent, 
+    ComponenteBComponent
   ],
   imports: [      // Necesitará de algunos paquetes adicionales para funcionar... algunos de angular... otros no...... que angular tendrá que arrancar
     BrowserModule,
     ReactiveFormsModule
   ],
   providers: [
-    { provide: UsuariosService, useClass: UsuarioServiceFake}
+    { provide: UsuariosService, useClass: UsuarioServiceFake},
+    { provide: ServicioService, useClass: ServicioServiceImpl}
     // Cuando alguien te pida un UsuarioService, que ofrezca una instancia de un UsuarioServiceFake
   ],  // Los componentes de mi módulo, necesitarán dependencias...
                   // Y aquí configuro cómo debe realizarse la inyección de dependencias
