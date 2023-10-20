@@ -68,12 +68,15 @@ export class ListadoUsuariosComponent implements OnInit {
     this.usuarioConOperacionEnCurso = undefined
   }
   //USUARIO_EN_EDICION --> NORMAL: Cuando se pulse en guardar
-  edicionConfirmadaParaUsuario(userId: number) {
-    if (this.usuarioConOperacionEnCurso !== userId)
+  edicionConfirmadaParaUsuario(datos:DatosDeUsuario) {
+    if (this.usuarioConOperacionEnCurso !== datos.id)
       throw new Error("No se puede confirmar una edición que no está en curso") // BUG MIO
     this.estado = EstadosComponenteListadoUsuarios.NORMAL
     this.usuarioConOperacionEnCurso = undefined
-    // Todo ... habrá datos nuevos... que tendré que actualizar en mi listado
+    this.listadoDeUsuarios = this.listadoDeUsuarios!.map(
+      usuario => usuario.id === datos.id ? datos : usuario
+      )
+      // TODO: Mandarlo a un servicio
   }
   //USUARIO_EN_BORRADO --> NORMAL: Cuando se pulse en cancelar
   borradoCanceladoParaUsuario(userId: number) {
@@ -88,7 +91,9 @@ export class ListadoUsuariosComponent implements OnInit {
       throw new Error("No se puede confirmar un borrado que no está en curso") // BUG MIO
     this.estado = EstadosComponenteListadoUsuarios.NORMAL
     this.usuarioConOperacionEnCurso = undefined
-    // TODO: Borrarlo de mi listado
+    this.listadoDeUsuarios = this.listadoDeUsuarios!.filter(usuario => usuario.id !== userId)
+    this.buscar() // Para que se rellene el listado a mostrar
+    // TODO: Mandarlo a un servicio
   }
 
   buscar(texto: string = "") {
@@ -135,5 +140,10 @@ export class ListadoUsuariosComponent implements OnInit {
     this.usuariosSeleccionados = []
     this.estado = EstadosComponenteListadoUsuarios.NORMAL
   }
-
+  borrarTodosLosUsuariosSeleccionados(){
+    console.log("Borrando usuarios", this.usuariosSeleccionados)
+    this.listadoDeUsuarios = this.listadoDeUsuarios!.filter(usuario => !this.usuariosSeleccionados.includes(usuario.id))
+    this.buscar() // Para que se rellene el listado a mostrar
+    this.estado = EstadosComponenteListadoUsuarios.NORMAL
+  }
 }

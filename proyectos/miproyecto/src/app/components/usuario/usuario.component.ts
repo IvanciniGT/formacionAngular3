@@ -34,7 +34,7 @@ export class UsuarioComponent implements OnInit, OnChanges{
   @Output() 
   onEditadoCancelado=new EventEmitter<number>()
   @Output() 
-  onEditadoConfirmado=new EventEmitter<number>()
+  onEditadoConfirmado=new EventEmitter<DatosDeUsuario>()
   @Output() 
   onCargado=new EventEmitter<number>()
   @Output() 
@@ -54,6 +54,7 @@ export class UsuarioComponent implements OnInit, OnChanges{
   // Cacho truco rastrero...
   // Me creo una prop en el componente que guarda la enum... para poder acceder a ella desde la plantilla
   EstadoComponenteUsuario = EstadoComponenteUsuario;
+  datosEnFormulario?: DatosDeUsuario
 
   constructor(private servicioDeUsuarios: UsuariosService){ // Solicito una inyección de dependencias... A quién? a ANGULAR !
     // AQUI PONGO DE NADA A MENOS CODIGO... en general
@@ -114,7 +115,8 @@ export class UsuarioComponent implements OnInit, OnChanges{
   }
   edicionConfirmada(){ // TODO: GUARDAR los nuevos datos
     this.estado = EstadoComponenteUsuario.NORMAL
-    this.onEditadoConfirmado.emit(this.datosDelUsuario!.id as number)
+    this.datosDelUsuario = this.datosEnFormulario
+    this.onEditadoConfirmado.emit(this.datosDelUsuario!)
   }
   borradoIniciado(){
     this.estado = EstadoComponenteUsuario.EN_BORRADO
@@ -130,6 +132,7 @@ export class UsuarioComponent implements OnInit, OnChanges{
   }
 
   formularioValido(datos:DatosDeUsuario){
+    this.datosEnFormulario = datos
     this.estado = EstadoComponenteUsuario.EDICION_VALIDA;
   }
   formularioInvalido(){

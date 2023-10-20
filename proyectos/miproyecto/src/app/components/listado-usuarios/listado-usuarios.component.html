@@ -24,6 +24,14 @@
             || estado === Estado.TODOS_USUARIOS_SELECCIONADOS"
         [disabled]="estado === Estado.NORMAL"
         >Deseleccionar todos</button>        
+        <accion-confirmable
+            *ngIf="estado === Estado.ALGUN_USUARIO_SELECCIONADO
+                || estado === Estado.TODOS_USUARIOS_SELECCIONADOS"
+            caption="Borrar seleccionados"
+            confirmationCaption="Confirmar"
+            cancellationCaption="Cancelar"
+            (onAccionConfirmada)="borrarTodosLosUsuariosSeleccionados()"
+        ></accion-confirmable>
     </div>
     <!--Listado de los usuarios-->
     <div class="usuarios">
@@ -50,7 +58,7 @@
             (onBorradoConfirmado)="borradoConfirmadoParaUsuario(usuarioActual.id)"
             (onEditadoSolicitado)="usuarioEnEdicion(usuarioActual.id)"
             (onEditadoCancelado)="edicionCanceladaParaUsuario(usuarioActual.id)"
-            (onEditadoConfirmado)="edicionConfirmadaParaUsuario(usuarioActual.id)"
+            (onEditadoConfirmado)="edicionConfirmadaParaUsuario($event)"
 
         ></usuario>
     </div>
